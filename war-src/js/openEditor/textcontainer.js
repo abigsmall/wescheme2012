@@ -27,8 +27,9 @@ var WeSchemeTextContainer;
                                             that.impl = anImpl;
                                             afterInitialization(that);
                                           });
-    tc.editor.getWrapperElement().id = id;
-    tc.editor.getWrapperElement().impl = tc;
+
+    	tc.editor.getWrapperElement().id = id;
+    	tc.editor.getWrapperElement().impl = tc;
 	};
 
 	WeSchemeTextContainer.prototype.refresh = function() {
@@ -137,26 +138,21 @@ var WeSchemeTextContainer;
            }
         );
 
-        // Under IE 7, some of these style settings appear to die.
-        try { this.editor.getWrapperElement().style.width = options.width || "100%"; } catch (e) {}
+        this.editor.getWrapperElement().style.width = options.width || "100%";
         if (! (options.dynamicHeight)) {
             // If dynamic height, we'll be doing something special below.
-            try { this.editor.getWrapperElement().style.height = options.height || "100%"; } catch(e) {}
+            this.editor.getWrapperElement().style.height = options.height || "100%";
         }
 
-        try {
-          this.editor.getScrollerElement().style.width = "100%";
-        } catch (e) {}
+         this.editor.getScrollerElement().style.width = "100%";
 
         // Setting overflow to visible to auto-resize the editor to fit
-        // its content.  It may be that IE doesn't support setting some
-        // of these attributes, so we are really crazy about putting
-        // exception handling around this.
+        // its content.
         if (options.dynamicHeight) {
-            try { this.editor.getScrollerElement().style.height = 'auto'; } catch(e) {}
-            try { this.editor.getScrollerElement().style.overflow = 'visible'; } catch(e) {}
+            this.editor.getScrollerElement().style.height = 'auto';
+            this.editor.getScrollerElement().style.overflow = 'visible';
         } else {
-          try { this.editor.getScrollerElement().style.height = "100%"; } catch(e) {}
+          this.editor.getScrollerElement().style.height = "100%";
         }
 	
 	    this.editor.refresh();
@@ -208,7 +204,7 @@ var WeSchemeTextContainer;
 	};
  
 	//name for the current highlight's css
-  var currentHighlightNumber = 0;
+  	var currentHighlightNumber = 0;
 	CodeMirrorImplementation.prototype.highlight = function(id, offset, line, column, span, color) {
 		offset--; //off-by-one otherwise
 		var stylesheet = document.styleSheets[0], //this is default.css
@@ -216,11 +212,7 @@ var WeSchemeTextContainer;
 
 		currentHighlightNumber++;
             
-    if (stylesheet.insertRule) {
-      stylesheet.insertRule("." + name + " { background-color: " + color + ";}", 0);
-    } else { // IE8 compatibility
-      stylesheet.addRule("." + name, "background-color: " + color + "", 0);
-    }
+    	stylesheet.insertRule("." + name + " { background-color: " + color + ";}", 0);
 
 		var start = this.editor.posFromIndex(parseInt(offset)),
         end = this.editor.posFromIndex(parseInt(offset)+parseInt(span)),
@@ -253,19 +245,19 @@ var WeSchemeTextContainer;
 
 	CodeMirrorImplementation.prototype.scrollIntoView = function(offset, margin) {
 		var moveTo = this.editor.posFromIndex(offset);
-    moveTo.ch--; //off-by-one otherwise
-    this.editor.scrollIntoView(moveTo, margin);
+    	moveTo.ch--; //off-by-one otherwise
+    	this.editor.scrollIntoView(moveTo, margin);
 	};
 
 	CodeMirrorImplementation.prototype.setSelection = function(id, offset, line, column, span) {
-    offset--; //off-by-one otherwise
+   		offset--; //off-by-one otherwise
 		var start = this.editor.posFromIndex(parseInt(offset));
 		var end = this.editor.posFromIndex(parseInt(offset)+parseInt(span));
 		this.editor.setSelection(start, end);
 	};
-  // clear all textMarkers, and reset the highlightedAreas array
+  	// clear all textMarkers, and reset the highlightedAreas array
 	CodeMirrorImplementation.prototype.unhighlightAll = function () {
-    this.highlightedAreas.forEach(function(ha){ ha.clear(); });
+    	this.highlightedAreas.forEach(function(ha){ ha.clear(); });
 		this.highlightedAreas = [];
 	};
 
@@ -285,12 +277,8 @@ var WeSchemeTextContainer;
 	};
 
 	CodeMirrorImplementation.prototype.focus = function() {
-    // The try/catch blocks are meant to work around
-    // an issue in IE8 and CodeMirror 3.1.  It may be obsolete
-    // as soon as the issue is resolved:
-    // https://github.com/marijnh/CodeMirror/issues/1200
-    try { this.editor.focus();   } catch (e) {}
-    try { this.editor.refresh(); } catch (e) {}
+    	this.editor.focus();
+    	this.editor.refresh();
 	};
 	
 	CodeMirrorImplementation.prototype.refresh = function() {
