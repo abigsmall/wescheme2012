@@ -1,0 +1,328 @@
+.blocks-struct,
+.blocks-functionDef,
+.blocks-variableDef,
+.blocks-expression,
+.blocks-unknown {
+  color: black;
+  white-space: nowrap;
+  border: 3px solid transparent;
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+.blocks-operator .blocks-breadcrumb {
+  box-shadow: 3px 6px 26px 5px rgba(0, 200, 0, 0.75);
+  border: solid lightgreen 3px;
+}
+.blocks-name,
+.blocks-literal,
+.blocks-blank {
+  padding: 2px;
+  border-radius: 5px;
+  border: 3px solid transparent;
+  cursor: hand;
+}
+.blocks-name.blocks-editing,
+.blocks-literal.blocks-editing,
+.blocks-blank.blocks-editing,
+.blocks-name.blocks-quarantine,
+.blocks-literal.blocks-quarantine,
+.blocks-blank.blocks-quarantine {
+  border-color: orange;
+}
+.blocks-name.blocks-editing.blocks-error,
+.blocks-literal.blocks-editing.blocks-error,
+.blocks-blank.blocks-editing.blocks-error,
+.blocks-name.blocks-quarantine.blocks-error,
+.blocks-literal.blocks-quarantine.blocks-error,
+.blocks-blank.blocks-quarantine.blocks-error {
+  border-color: red !important;
+}
+.blocks-name:hover,
+.blocks-literal:hover,
+.blocks-blank:hover {
+  border: solid rgba(255, 165, 0, 0.3);
+}
+.blocks-name.blocks-over-target,
+.blocks-literal.blocks-over-target,
+.blocks-blank.blocks-over-target {
+  background-color: red;
+}
+.blocks-name *,
+.blocks-literal *,
+.blocks-blank * {
+  pointer-events: none;
+}
+.blocks-name .blocks-literal-number,
+.blocks-literal .blocks-literal-number,
+.blocks-blank .blocks-literal-number {
+  color: blue;
+}
+.blocks-name .blocks-literal-string,
+.blocks-literal .blocks-literal-string,
+.blocks-blank .blocks-literal-string {
+  color: green;
+}
+.blocks-name .blocks-literal-char,
+.blocks-literal .blocks-literal-char,
+.blocks-blank .blocks-literal-char {
+  color: orange;
+}
+.blocks-name .blocks-literal-boolean,
+.blocks-literal .blocks-literal-boolean,
+.blocks-blank .blocks-literal-boolean {
+  color: darkred;
+}
+.blocks-name .blocks-literal-symbol,
+.blocks-literal .blocks-literal-symbol,
+.blocks-blank .blocks-literal-symbol {
+  color: steelblue;
+}
+.blocks-name {
+  color: steelblue;
+}
+.blocks-editing {
+  outline: 0;
+  cursor: text;
+}
+.blocks-over-target {
+  background-color: lightblue;
+  border-radius: 5px;
+}
+.blocks-white-space {
+  padding: 2px;
+  min-width: 10px;
+  min-height: 12px;
+  display: inline-block;
+}
+.blocks-white-space:hover {
+  background-color: lightblue;
+  cursor: hand;
+}
+.blocks-white-space.blocks-editing {
+  font-weight: normal;
+}
+.blocks-white-space.blocks-editing.blocks-error {
+  border: 3px solid red;
+}
+.blocks-white-space.blocks-editing:hover {
+  background-color: transparent;
+}
+.blocks-unknown {
+  background: rgba(255, 190, 190, 0.5);
+}
+.blocks-comment {
+  color: #ccc;
+  font-style: italic;
+}
+.blocks-dragging .blocks-white-space {
+  background-color: transparent;
+}
+.blocks-blank {
+  cursor: hand;
+}
+.blocks-blank:after {
+  content: "?";
+  color: black;
+  width: 20px;
+}
+.blocks-blank.blocks-editing {
+  background: transparent;
+}
+.blocks-blank.blocks-editing:after {
+  content: none;
+  width: 0px;
+}
+.blocks-breadcrumb {
+  box-shadow: 3px 6px 26px 0px rgba(0, 0, 0, 0.75);
+  border: lightgreen solid 3px;
+}
+.text .blocks-struct *,
+.text .blocks-functionDef *,
+.text .blocks-variableDef *,
+.text .blocks-expression *,
+.text .blocks-unknown *,
+.text .blocks-hidden * {
+  display: inline;
+  padding: 0px;
+  margin: 0px;
+  white-space: normal;
+  height: none;
+}
+.text .blocks-struct .blocks-white-space,
+.text .blocks-functionDef .blocks-white-space,
+.text .blocks-variableDef .blocks-white-space,
+.text .blocks-expression .blocks-white-space,
+.text .blocks-unknown .blocks-white-space,
+.text .blocks-hidden .blocks-white-space {
+  display: inline-block;
+  min-width: 10px;
+  min-height: 12px;
+}
+.text .blocks-struct .blocks-white-space[contenteditable="true"],
+.text .blocks-functionDef .blocks-white-space[contenteditable="true"],
+.text .blocks-variableDef .blocks-white-space[contenteditable="true"],
+.text .blocks-expression .blocks-white-space[contenteditable="true"],
+.text .blocks-unknown .blocks-white-space[contenteditable="true"],
+.text .blocks-hidden .blocks-white-space[contenteditable="true"] {
+  margin: 0px 4px;
+}
+.text .blocks-struct .blocks-blank.blocks-editing,
+.text .blocks-functionDef .blocks-blank.blocks-editing,
+.text .blocks-variableDef .blocks-blank.blocks-editing,
+.text .blocks-expression .blocks-blank.blocks-editing,
+.text .blocks-unknown .blocks-blank.blocks-editing,
+.text .blocks-hidden .blocks-blank.blocks-editing {
+  display: inline-block;
+  min-width: 10px;
+}
+.blocks .blocks-hidden {
+  display: none !important;
+}
+.blocks .blocks-struct,
+.blocks .blocks-functionDef,
+.blocks .blocks-variableDef,
+.blocks .blocks-expression,
+.blocks .blocks-unknown {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+  color: black;
+  border: 3px solid black;
+  border-radius: 15px;
+  margin: 5px;
+  background: #ccc;
+  overflow: hidden;
+}
+.blocks .blocks-operator {
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
+  padding: 3px 5px;
+  text-align: center;
+  background: black;
+  color: white;
+}
+.blocks .blocks-operator .blocks-literal {
+  color: white;
+  border: 3px inset;
+}
+.blocks .blocks-operator > .blocks-expression {
+  box-shadow: 0px 0px 10px 1px white;
+}
+.blocks .blocks-args {
+  display: inline-flex;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  background: #eee;
+  padding: 8px 0px;
+}
+.blocks .blocks-args > .blocks-literal,
+.blocks .blocks-args .blocks-white-space[contenteditable="true"] {
+  background: white;
+  border: 3px lightgray inset;
+}
+.blocks .blocks-name,
+.blocks .blocks-literal,
+.blocks .blocks-blank {
+  display: inline-block;
+  color: black;
+  min-width: 10px;
+  height: 1.1em;
+}
+.blocks .blocks-name.blocks-editing,
+.blocks .blocks-literal.blocks-editing,
+.blocks .blocks-blank.blocks-editing,
+.blocks .blocks-name.blocks-quarantine,
+.blocks .blocks-literal.blocks-quarantine,
+.blocks .blocks-blank.blocks-quarantine {
+  border-color: orange;
+}
+.blocks .blocks-name.blocks-editing.blocks-error,
+.blocks .blocks-literal.blocks-editing.blocks-error,
+.blocks .blocks-blank.blocks-editing.blocks-error,
+.blocks .blocks-name.blocks-quarantine.blocks-error,
+.blocks .blocks-literal.blocks-quarantine.blocks-error,
+.blocks .blocks-blank.blocks-quarantine.blocks-error {
+  border-color: red;
+}
+.blocks .blocks-name.blocks-over-target,
+.blocks .blocks-literal.blocks-over-target,
+.blocks .blocks-blank.blocks-over-target {
+  background-color: red;
+}
+.blocks .blocks-white-space {
+  border: 3px dotted lightgray;
+  font-weight: bold;
+  border-radius: 5px;
+  margin: 0px 5px;
+  min-width: 10px;
+  height: 1.1em;
+  cursor: default;
+}
+.blocks .blocks-white-space.blocks-editing {
+  margin: 0px 5px;
+}
+.blocks .blocks-white-space.blocks-editing.blocks-error {
+  border: 3px solid red;
+}
+.blocks .blocks-white-space.blocks-editing:hover {
+  background-color: transparent;
+}
+.blocks .blocks-unknown {
+  border-width: 1px;
+}
+.blocks .blocks-unknown > .blocks-operator {
+  background: rgba(0, 0, 0, 0.5);
+}
+.blocks .blocks-unknown > .blocks-args {
+  background: rgba(255, 190, 190, 0.5);
+}
+.blocks .blocks-dragging .blocks-white-space {
+  background-color: transparent;
+}
+.blocks .blocks-blank {
+  color: white;
+  background: gold;
+}
+.blocks .blocks-blank:after {
+  color: black;
+  display: inline-block;
+  width: 20px;
+}
+.blocks .blocks-blank.blocks-editing {
+  background: transparent;
+}
+.blocks .blocks-blank.blocks-editing:after {
+  content: none;
+  width: 0px;
+}
+.blocks-node:focus {
+  border-color: orange !important;
+  outline: 0;
+}
+.blocks-node,
+.transition {
+  animation-duration: 1.5s;
+  transition: left 1s linear,
+              top 1s linear, 
+              height 1s linear,
+              width 1s linear;
+}
+.transition {
+  border-radius: 15px;
+  border-width: 1px 3px;
+  border-style: dotted solid;
+  border-color: gray;
+}
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

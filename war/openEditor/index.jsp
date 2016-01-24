@@ -53,14 +53,17 @@
     <script src="/js/jquery/jquery.center-in-client-min.js" type="text/javascript"></script>
     <script src="/js/jquery/jquery.blockUI-min.js" type="text/javascript"></script>
 
-    <script src="/js/codemirror2/lib/codemirror-min.js" type="text/javascript"></script>
+    <script src="/js/codemirror2/lib/codemirror.js" type="text/javascript"></script>
     <script src="/js/codemirror2/addon/edit/matchbrackets.js" type="text/javascript"></script>
     <script src="/js/codemirror2/addon/runmode/runmode.js" type="text/javascript"></script>
     <script src="/js/codemirror2-contrib/scheme2/scheme2-min.js" type="text/javascript"></script>
+    <script src="/js/codemirror2-contrib/blocks/CodeMirrorBlocks-min.js" type="text/javascript"></script>
+    <script src="/js/codemirror2-contrib/blocks/WeschemeParser-min.js" type="text/javascript"></script>
 
     <link rel="stylesheet" type="text/css" href="/css/codemirror.css" id="style" />
     <link rel="stylesheet" type="text/css" href="/js/codemirror2/lib/codemirror.css"></link>
     <link rel="stylesheet" type="text/css" href="/js/codemirror2-contrib/scheme2/schemecolors.css"></link>
+    <link rel="stylesheet" type="text/css" href="/js/codemirror2-contrib/blocks/blocks.css"></link>
 
 <!-- No longer need to load this, since we're relying on custom keyboards in android and iOS'
     <script src="/js/ios-keyboard/iOSkeyboard.js" type="text/javascript"></script>
@@ -352,6 +355,11 @@
     <a tabIndex="1" role="button" aria-label="Undo" id="undo" class="clickableAnchor"><img src="/images/undo.png"></a>
     <a tabIndex="1" role="button" aria-label="Redo" id="redo" class="clickableAnchor"><img src="/images/redo.png"></a>
     <div id="statusbar" role="marquee" aria-relevant="text"></div>
+    <select id="mode" style="float:right;">
+      <option value="false">Text</option>
+      <option value="text">Structured</option>
+      <option value="blocks">Blocks</option>
+    </select>
 	</div>
 
   <div id="documentation" class="documentation">

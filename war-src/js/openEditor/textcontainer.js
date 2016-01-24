@@ -21,7 +21,7 @@ var WeSchemeTextContainer;
 		this.options = options;
 		this.keymaps = [];
 		jQuery(this.div).empty();
-		var tc = new CodeMirrorImplementation(this,
+		var tc = new BlockImplementation(this,
                                           options,
                                           function(anImpl){
                                             that.impl = anImpl;
@@ -78,13 +78,12 @@ var WeSchemeTextContainer;
 	WeSchemeTextContainer.prototype.setCursorToEnd = function() {
 		this.impl.setCursorToEnd();
 	};
-  WeSchemeTextContainer.prototype.getCSS = function(pos){
+  	WeSchemeTextContainer.prototype.getCSS = function(pos){
 		return this.impl.getCSS(pos);
 	}
 	//////////////////////////////////////////////////////////////////////
 
 	var CodeMirrorImplementation = function(parent, options, onSuccess) {
-
 		// Note: "parent" seems to be a "WeSchemeTextContainer".
 		//
 		// Note: "CodeMirrorImplementation.editor" is set by the "initCallback"
@@ -119,8 +118,8 @@ var WeSchemeTextContainer;
 					matchBrackets: (options.matchBrackets !== undefined ? options.matchBrackets : true),
 					value: options.content || "",
 					readOnly: (typeof (options.readOnly) !== undefined? options.readOnly : false),
-          cursorBlinkRate: (typeof (options.cursorBlinkRate) !== undefined? options.cursorBlinkRate : 350),
-          inputStyle: "contenteditable"
+          			cursorBlinkRate: (typeof (options.cursorBlinkRate) !== undefined? options.cursorBlinkRate : 350),
+          			inputStyle: "contenteditable"
 				});
        this.editor.getGutterElement().setAttribute('aria-hidden', "true"); // ARIA - don't read line numbers
        this.editor.on('change', function() { that.behaviorE.sendEvent(that.editor.getValue());});
@@ -128,7 +127,7 @@ var WeSchemeTextContainer;
         // capture all paste events, and remove curly quotes before inserting
         // this solves the use-case where a teacher uses a rich text editor to write code
         // (using bold/italic to emphasize parts), and then pastes it into WeScheme
-        this.editor.on("beforeChange",
+/*        this.editor.on("beforeChange",
           function(cm, changeObj){
            function replaceQuotes(str){
               return str.replace(/[\u2018\u2019]/g, "'").replace(/[\u201C\u201D]/g, '"');
@@ -137,7 +136,7 @@ var WeSchemeTextContainer;
            if(changeObj.origin==="paste") changeObj.text = changeObj.text.map(replaceQuotes);
            }
         );
-
+*/
         this.editor.getWrapperElement().style.width = options.width || "100%";
         if (! (options.dynamicHeight)) {
             // If dynamic height, we'll be doing something special below.
@@ -289,6 +288,72 @@ var WeSchemeTextContainer;
 	CodeMirrorImplementation.prototype.getCSS = function(pos) {
 		return this.editor.findMarksAt(pos);
 	};
+
+	//////////////////////////////////////////////////////////////////////
+
+	// Inheritance from pg 168: Javascript, the Definitive Guide.
+	var heir = function(p) {
+		var f = function() {};
+		f.prototype = p;
+		return new f();
+	};
+
+
+	var BlockImplementation = function(parent, options, onSuccess) {
+		CodeMirrorImplementation.call(this, parent, options, onSuccess);
+		var that = this;
+	    that.blocksEditor = new CodeMirrorBlocks(
+		  that.editor,
+		  new CodeMirrorBlocks.parsers.WeschemeParser(),
+		  {
+		    willInsertNode: function(sourceNodeText, sourceNode, destination) {
+		      var line = that.editor.getLine(destination.line);
+		      if (destination.ch > 0 && line[destination.ch - 1].match(/[\w\d]/)) {
+		        // previous character is a letter or number, so prefix a space
+		        sourceNodeText = ' ' + sourceNodeText;
+		      }
+
+		      if (destination.ch < line.length && line[destination.ch].match(/[\w\d]/)) {
+		        // next character is a letter or a number, so append a space
+		        sourceNodeText += ' ';
+		      }
+		      return sourceNodeText;
+		    }
+		  });
+	    onSuccess.call(this, this);
+	};
+	BlockImplementation.prototype = heir(CodeMirrorImplementation.prototype);
+	
+ 
+	//name for the current highlight's css
+  	var currentHighlightNumber = 0;
+	BlockImplementation.prototype.highlight = function(id, offset, line, column, span, color) {
+		offset--; //off-by-one otherwise
+		var stylesheet = document.styleSheets[0], //this is default.css
+        name = "highlight" + (currentHighlightNumber+'x');//to prevent overwriting with prefixes
+
+		currentHighlightNumber++;
+            
+    	stylesheet.insertRule("." + name + " { background-color: " + color + ";}", 0);
+
+		var start = this.editor.posFromIndex(parseInt(offset)),
+        end = this.editor.posFromIndex(parseInt(offset)+parseInt(span)),
+        highlightedArea = this.blocksEditor.markText(start, end, {className: name});
+ 		this.highlightedAreas.push(highlightedArea);
+ 		this.scrollIntoView(offset, span);
+
+ 		//return highlightedArea;
+ 		return {clear: function() { return highlightedArea.clear(); },
+            	find: function() { return highlightedArea.find();  },
+            	styleName: name
+ 				}
+	};
+	BlockImplementation.prototype.changeMode = function(mode){ 
+		if(mode === "false") mode = false;
+		this.blocksEditor.setBlockMode(mode); 
+	}
+	
+
 	//////////////////////////////////////////////////////////////////////
 	// Helpers
 	var normalizeString = function(s) {
